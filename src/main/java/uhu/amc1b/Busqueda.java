@@ -23,6 +23,14 @@ public class Busqueda {
         }
     }
 
+    public void unidireccional() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void bidireccional() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void exhaustiva() {
         double t1 = System.nanoTime();
         Punto[] p = array.get(EXH);
@@ -31,8 +39,8 @@ public class Busqueda {
         for (int i = 0; i < permutations.size(); i++) {
             double camino = 0.0;
             Punto[] tmp = permutations.get(i);
-            for (int j = 0; j < tmp.length - 1; j++) {
-                camino = camino + Punto.distancia(tmp[i], tmp[i + 1]);
+            for (int j = 0; j < tmp.length - 2; j++) {
+                camino = camino + Punto.distancia(tmp[j], tmp[j + 1]);
             }
             camino = camino + Punto.distancia(tmp[0], tmp[tmp.length - 1]);
             if (min > camino) {
@@ -44,7 +52,7 @@ public class Busqueda {
         t[EXH] = (double) (t2 - t1);
     }
 
-    public void heaps(int n, Punto[] elements) {
+    private void heaps(int n, Punto[] elements) {
         if (n == 1) {
             permutations.add(elements);
         } else {
@@ -60,7 +68,7 @@ public class Busqueda {
         }
     }
 
-    private static void swap(Punto[] elements, int a, int b) {
+    private void swap(Punto[] elements, int a, int b) {
         Punto tmp = elements[a];
         elements[a] = elements[b];
         elements[b] = tmp;

@@ -15,11 +15,11 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class GraficaE extends JFrame {
+public class Grafica extends JFrame {
 
     private final double[][] d;
 
-    public GraficaE(double[][] datos, String nombreA) {
+    public Grafica(double[][] datos, String nombreA, String nombreB) {
         d = datos;
 
         //crear la grafica
@@ -35,6 +35,17 @@ public class GraficaE extends JFrame {
         //añadir dmin0 a la grafica
         plot.setDataset(0, setDist0);
         plot.setRenderer(0, renderer0);
+
+        //crear dmin1
+        XYDataset setDist1 = createDist(2, nombreB);
+        //caracteristicas de dmin1
+        XYItemRenderer renderer1 = new XYLineAndShapeRenderer(true, true);
+        renderer1.setSeriesShape(0, new Rectangle2D.Double(-3.0, 0.0, 6.0, 6.0));
+        renderer1.setSeriesPaint(0, Color.MAGENTA);
+        renderer1.setSeriesStroke(0, new BasicStroke(2.0f));
+        //añadir dmin1 a la grafica
+        plot.setDataset(1, setDist1);
+        plot.setRenderer(1, renderer1);
 
         //crear y añadir los ejes
         ValueAxis domain = new NumberAxis("Talla");

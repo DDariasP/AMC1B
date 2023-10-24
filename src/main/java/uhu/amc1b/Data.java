@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class Data {
 
-    public static Punto[] crearTSP(int talla, boolean peor) {
+    public static Punto[] crearTSP(int talla) {
         try {
             //crear el nuevo .tsp
             String outputName = "dataset" + String.valueOf(talla) + ".tsp";
@@ -27,7 +27,7 @@ public class Data {
             writer.write("DIMENSION: " + String.valueOf(talla) + "\n");
             writer.write("NODE_COORD_SECTION\n");
             Punto p[] = new Punto[talla];
-            Punto.rellenar(p, talla, peor); //crear el array correspondiente
+            Punto.rellenar(p, talla); //crear el array correspondiente
             DecimalFormat numberFormat = new DecimalFormat("#.0000000000");
             for (int i = 0; i < talla; i++) {
                 String x = numberFormat.format(p[i].x);

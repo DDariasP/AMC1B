@@ -34,14 +34,13 @@
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Component id="botonOpcion2" alignment="0" max="32767" attributes="0"/>
                               <Component id="botonOpcion3" alignment="0" max="32767" attributes="0"/>
-                              <Component id="botonOpcion5" alignment="0" max="32767" attributes="0"/>
-                              <Component id="botonOpcion4" alignment="0" pref="227" max="32767" attributes="0"/>
                               <Component id="botonOpcionE" alignment="0" max="32767" attributes="0"/>
+                              <Component id="botonOpcion5" alignment="0" pref="227" max="32767" attributes="0"/>
+                              <Component id="botonOpcion4" alignment="0" max="32767" attributes="0"/>
                               <Component id="botonOpcion1" max="32767" attributes="0"/>
-                              <Component id="checkCasoPeor" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="46" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -64,26 +63,37 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="botonOpcion3" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="botonOpcionE" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="botonOpcion4" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="botonOpcion5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
-              <Component id="checkCasoPeor" min="-2" pref="30" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="botonOpcionE" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="53" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JCheckBox" name="checkCasoPeor">
+    <Component class="javax.swing.JLabel" name="labelTitulo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Caso Peor"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Liberation Sans" size="18" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Algoritmos Voraces"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkCasoPeorActionPerformed"/>
-      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelSubtitulo">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Liberation Sans" size="16" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="El problema del viajante"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelArchivo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Array cargado:"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="botonOpcion1">
       <Properties>
@@ -105,7 +115,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonOpcion3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="3) Testear todas las estrategias"/>
+        <Property name="text" type="java.lang.String" value="3) B&#xfa;squeda unidireccional"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
       </Properties>
       <Events>
@@ -114,7 +124,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonOpcion4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="4) Comparar todas las estrategias"/>
+        <Property name="text" type="java.lang.String" value="4) B&#xfa;squeda bidireccional"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
       </Properties>
       <Events>
@@ -123,37 +133,16 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonOpcion5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="5) Comparar dos estrategias"/>
+        <Property name="text" type="java.lang.String" value="5) Comparar ambas estrategias"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonOpcion5ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="labelTitulo">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Liberation Sans" size="18" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Estrategias de b&#xfa;squeda"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelSubtitulo">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Liberation Sans" size="16" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Distancia m&#xed;nima entre dos puntos"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelArchivo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Array cargado:"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="botonOpcionE">
       <Properties>
-        <Property name="text" type="java.lang.String" value="E) Testear una estrategia"/>
+        <Property name="text" type="java.lang.String" value="E) B&#xfa;squeda exhaustiva"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
       </Properties>
       <Events>

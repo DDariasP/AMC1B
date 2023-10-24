@@ -69,27 +69,16 @@ public class Punto {
         p[j] = temp;
     }
 
-    public static void rellenar(Punto p[], int talla, boolean peor) {
+    public static void rellenar(Punto p[], int talla) {
         int num, den;
-        double x, y, aux1;
+        double x, y;
         Random r = new Random(System.nanoTime());
-        if (peor) {
-            for (int i = 0; i < talla; i++) {
-                aux1 = r.nextInt() % 1000 + 7;
-                y = aux1 / ((double) i + 1 + i * 0.1);
-                num = r.nextInt() % 3;
-                y += ((i % 500) - num * (r.nextInt() % 100));
-                x = 1;
-                p[i] = new Punto(i, x, y);
-            }
-        } else {
-            for (int i = 0; i < talla; i++) {
-                num = r.nextInt() % 4000 + 1;
-                den = r.nextInt() % 11 + 7;
-                x = num / ((double) den + 0.37);
-                y = (r.nextInt() % 4000 + 1) / ((double) (r.nextInt() % 11 + 7) + 0.37);
-                p[i] = new Punto(i + 1, x, y);
-            }
+        for (int i = 0; i < talla; i++) {
+            num = r.nextInt() % 4000 + 1;
+            den = r.nextInt() % 11 + 7;
+            x = num / ((double) den + 0.37);
+            y = (r.nextInt() % 4000 + 1) / ((double) (r.nextInt() % 11 + 7) + 0.37);
+            p[i] = new Punto(i + 1, x, y);
         }
     }
 
