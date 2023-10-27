@@ -48,7 +48,7 @@ public class Menu extends javax.swing.JFrame {
         labelTitulo.setText("Algoritmos Voraces");
 
         labelSubtitulo.setFont(new java.awt.Font("Liberation Sans", 1, 16)); // NOI18N
-        labelSubtitulo.setText("El problema del viajante");
+        labelSubtitulo.setText("Problema del viajante");
 
         labelArchivo.setText("Array cargado:");
 
@@ -181,7 +181,7 @@ public class Menu extends javax.swing.JFrame {
             if (input == JFileChooser.APPROVE_OPTION) {
                 file = fc.getSelectedFile();
                 fileName = file.getName();
-                array = Data.parsearTSP(file.getName());
+                array = Data.parsearTSP(file);
                 labelArchivo.setText("Array cargado: " + fileName);
             }
         } catch (Exception e) {

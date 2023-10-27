@@ -24,11 +24,13 @@ public class Busqueda {
     }
 
     public void unidireccional() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+
     }
 
     public void bidireccional() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+
     }
 
     public void exhaustiva() {

@@ -43,10 +43,10 @@ public class Data {
         }
     }
 
-    public static Punto[] parsearTSP(String inputName) {
+    public static Punto[] parsearTSP(File file) {
         try {
             //averiguar la dimension
-            Scanner scanner = new Scanner(new File(inputName));
+            Scanner scanner = new Scanner(file);
             String line = "";
             boolean found = false;
             String[] tokens;
