@@ -93,10 +93,11 @@ public class Data {
         }
     }
 
-    public static void guardarBusqueda(Punto[] p, String tipo) {
+    public static void guardarBusqueda(Busqueda b, int n, String tipo) {
         try {
             //crear el nuevo .tsp
-            String outputName = tipo + String.valueOf(p.length) + ".tsp";
+            int m = b.array.get(0).length;
+            String outputName = tipo + m + ".tour";
             File output = new File(outputName);
             if (output.exists()) {
                 output.delete();
@@ -104,14 +105,25 @@ public class Data {
             output.createNewFile();
             //rellenar el nuevo .tsp
             FileWriter writer = new FileWriter(outputName);
-            writer.write("DIMENSION: " + String.valueOf(p.length) + "\n");
-            writer.write("NODE_COORD_SECTION\n");
-            DecimalFormat numberFormat = new DecimalFormat("#.0000000000");
-            for (int i = 0; i < p.length; i++) {
-                String x = numberFormat.format(p[i].x);
-                String y = numberFormat.format(p[i].y);
-                writer.write(p[i].id + " " + x + " " + y + "\n");
+            writer.write("NAME: " + outputName + "\n");
+            writer.write("TYPE: TOUR\n");
+            writer.write("DIMENSION: " + m + "\n");
+            DecimalFormat numberFormat = new DecimalFormat("#.00000000");
+            writer.write("SOLUTION: " + numberFormat.format(b.path[n].valor) + "\n");
+            writer.write("TOUR_SECTION\n");
+            String path = "";
+            Punto[] p = b.path[n].path;
+            for (int i = 0; i < p.length - 1; i++) {
+                path = path + p[i].id + ",";
             }
+            path = path + p[p.length - 1].id;
+            writer.write(path + "\n");
+            for (int i = 0; i < p.length - 1; i++) {
+                path = numberFormat.format(Punto.distancia(p[i], p[i + 1]));
+                path = path + " - " + p[i].id + "," + p[i + 1].id;
+                writer.write(path + "\n");
+            }
+            writer.write("EOF");
             writer.close();
         } catch (IOException ex) {
         }

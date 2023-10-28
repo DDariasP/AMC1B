@@ -90,6 +90,15 @@ public class Punto {
         return copia;
     }
 
+    public static Punto[] copiarplus1(Punto[] p) {
+        Punto copia[] = new Punto[p.length + 1];
+        for (int i = 0; i < p.length; i++) {
+            copia[i] = new Punto(p[i]);
+        }
+        copia[p.length] = copia[0];
+        return copia;
+    }
+
     @Override
     public String toString() {
         DecimalFormat p = new DecimalFormat("#.00");

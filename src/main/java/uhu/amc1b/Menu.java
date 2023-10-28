@@ -195,7 +195,7 @@ public class Menu extends javax.swing.JFrame {
             //hacer busqueda y crear archivo
             Busqueda b = new Busqueda(array);
             b.unidireccional();
-            Data.guardarBusqueda(b.array.get(b.UNI), "Unidireccional");
+            Data.guardarBusqueda(b, b.UNI, "Unidireccional");
             //definir formatos de salida
             DecimalFormat cm = new DecimalFormat("#.00000000");
             DecimalFormat tp = new DecimalFormat("0.0000");
@@ -204,8 +204,9 @@ public class Menu extends javax.swing.JFrame {
             String[] atributos = {" ",
                 "Unidireccional"};
             Object[][] datos = {
-                {"Camino", cm.format(b.path[b.UNI].valor)},
-                {"Tiempo(ms)", tp.format(b.t[b.UNI] / nano)}
+                {"Coste", cm.format(b.path[b.UNI].valor)},
+                {"Tiempo(ms)", tp.format(b.t[b.UNI] / nano)},
+                {"Calculadas", b.numcal[b.UNI]}
             };
             //mostrar tabla
             JTable t = new JTable(datos, atributos);
@@ -213,14 +214,14 @@ public class Menu extends javax.swing.JFrame {
             JFrame f = new JFrame();
             f.add(sp);
             f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            f.setBounds(700, 200, 1100, 120);
+            f.setBounds(700, 200, 1100, 100);
             f.setTitle("Resultados - " + fileName);
             f.setVisible(true);
             //mostrar g
             Grafo g = new Grafo(b.path[b.UNI]);
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             g.setBounds(200, 350, 800, 400);
-            g.setTitle("Representación");
+            g.setTitle("Camino");
             g.setVisible(true);
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         } catch (Exception e) {
@@ -233,8 +234,8 @@ public class Menu extends javax.swing.JFrame {
         try {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             //definir tallas y num de iteraciones
-            int T[] = {500, 1000, 1500, 3250, 5000};
-            double TD[] = {500.0, 1000.0, 1500.0, 3250.0, 5000.0};
+            int T[] = {500, 1000, 1500, 2000, 3000};
+            double TD[] = {500.0, 1000.0, 1500.0, 2000.0, 3000.0};
             int N = 100;
             Busqueda b[][] = new Busqueda[T.length][N];
             //crear arrays
@@ -254,15 +255,22 @@ public class Menu extends javax.swing.JFrame {
             }
             //calcular medias
             double[][] tablaT = new double[T.length][Busqueda.NUM - 1];
+            int[][] tablaV = new int[T.length][Busqueda.NUM - 1];
             for (int i = 0; i < T.length; i++) {
                 for (int j = 0; j < Busqueda.NUM - 1; j++) {
                     tablaT[i][j] = 0.0;
+                    tablaV[i][j] = 0;
                 }
             }
             for (int i = 0; i < T.length; i++) {
                 for (int j = 0; j < N; j++) {
                     tablaT[i][0] = tablaT[i][0] + b[i][j].t[0];
                     tablaT[i][1] = tablaT[i][1] + b[i][j].t[1];
+                    if (b[i][j].path[0].valor < b[i][j].path[1].valor) {
+                        tablaV[i][0]++;
+                    } else {
+                        tablaV[i][1]++;
+                    }
                 }
             }
             //definir formato de salida
@@ -271,21 +279,23 @@ public class Menu extends javax.swing.JFrame {
             //rellenar tabla
             String[] atributos = {"Talla",
                 "Unidireccional",
+                "Bidireccional",
+                "Unidireccional",
                 "Bidireccional"};
             Object[][] datos = {
-                {" ", "Tiempo(ms)", "Tiempo(ms)"},
-                {T[0], tp.format(tablaT[0][0] / nanoMedia), tp.format(tablaT[0][1] / nanoMedia)},
-                {T[1], tp.format(tablaT[1][0] / nanoMedia), tp.format(tablaT[1][1] / nanoMedia)},
-                {T[2], tp.format(tablaT[2][0] / nanoMedia), tp.format(tablaT[2][1] / nanoMedia)},
-                {T[3], tp.format(tablaT[3][0] / nanoMedia), tp.format(tablaT[3][1] / nanoMedia)},
-                {T[4], tp.format(tablaT[4][0] / nanoMedia), tp.format(tablaT[4][1] / nanoMedia)}
+                {" ", "Tiempo(ms)", "Tiempo(ms)", "Victorias", "Victorias"},
+                {T[0], tp.format(tablaT[0][0] / nanoMedia), tp.format(tablaT[0][1] / nanoMedia), tablaV[0][0], tablaV[0][1]},
+                {T[1], tp.format(tablaT[1][0] / nanoMedia), tp.format(tablaT[1][1] / nanoMedia), tablaV[1][0], tablaV[1][1]},
+                {T[2], tp.format(tablaT[2][0] / nanoMedia), tp.format(tablaT[2][1] / nanoMedia), tablaV[2][0], tablaV[2][1]},
+                {T[3], tp.format(tablaT[3][0] / nanoMedia), tp.format(tablaT[3][1] / nanoMedia), tablaV[3][0], tablaV[3][1]},
+                {T[4], tp.format(tablaT[4][0] / nanoMedia), tp.format(tablaT[4][1] / nanoMedia), tablaV[4][0], tablaV[4][1]}
             };
             double[][] valores = {
-                {TD[0], (tablaT[0][0] / nanoMedia), (tablaT[0][1] / nanoMedia)},
-                {TD[1], (tablaT[1][0] / nanoMedia), (tablaT[1][1] / nanoMedia)},
-                {TD[2], (tablaT[2][0] / nanoMedia), (tablaT[2][1] / nanoMedia)},
-                {TD[3], (tablaT[3][0] / nanoMedia), (tablaT[3][1] / nanoMedia)},
-                {TD[4], (tablaT[4][0] / nanoMedia), (tablaT[4][1] / nanoMedia)}
+                {TD[0], (tablaT[0][0] / nanoMedia), (tablaT[0][1] / nanoMedia), tablaV[0][0], tablaV[0][1]},
+                {TD[1], (tablaT[1][0] / nanoMedia), (tablaT[1][1] / nanoMedia), tablaV[1][0], tablaV[1][1]},
+                {TD[2], (tablaT[2][0] / nanoMedia), (tablaT[2][1] / nanoMedia), tablaV[2][0], tablaV[2][1]},
+                {TD[3], (tablaT[3][0] / nanoMedia), (tablaT[3][1] / nanoMedia), tablaV[3][0], tablaV[3][1]},
+                {TD[4], (tablaT[4][0] / nanoMedia), (tablaT[4][1] / nanoMedia), tablaV[4][0], tablaV[4][1]}
             };
             //mostrar tabla
             JTable t = new JTable(datos, atributos);
@@ -297,11 +307,17 @@ public class Menu extends javax.swing.JFrame {
             f.setTitle("Resultados");
             f.setVisible(true);
             //mostrar g
-            Grafica g = new Grafica(valores, "Unidireccional", "Bidireccional");
+            GraficaT g = new GraficaT(valores, "Unidireccional", "Bidireccional");
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             g.setBounds(200, 350, 800, 400);
-            g.setTitle("Representación");
+            g.setTitle("Tiempo");
             g.setVisible(true);
+            //mostrar h
+            GraficaV h = new GraficaV(valores, "Unidireccional", "Bidireccional");
+            h.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            h.setBounds(1000, 350, 600, 400);
+            h.setTitle("Victorias");
+            h.setVisible(true);
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         } catch (Exception e) {
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -314,55 +330,52 @@ public class Menu extends javax.swing.JFrame {
             //crear array aleatorio
             int talla = 0;
             Object input = JOptionPane.showInputDialog(this,
-                    "¿Tamaño del fichero?", "Crear un fichero .tsp aleatorio", JOptionPane.QUESTION_MESSAGE);
+                    "¿Tamaño del fichero? (<=10)", "Crear un fichero .tsp aleatorio", JOptionPane.QUESTION_MESSAGE);
             if (input != null) {
                 talla = Integer.parseInt((String) input);
-                if (talla > 0 && talla <= 12) {
+                if (talla > 0 && talla <= 10) {
                     array = Data.crearTSP(talla);
                     labelArchivo.setText("Array cargado: " + fileName);
                 } else {
                     throw new Exception();
                 }
+                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                //hacer busqueda y crear archivo
+                Busqueda b = new Busqueda(array);
+                b.exhaustiva();
+                Data.guardarBusqueda(b, b.EXH, "Exhaustiva");
+                //definir formatos de salida
+                DecimalFormat cm = new DecimalFormat("#.00000000");
+                DecimalFormat tp = new DecimalFormat("0.0000");
+                double nano = 1000000.0;
+                //rellenar tabla
+                String[] atributos = {" ",
+                    "Exhaustiva"};
+                Object[][] datos = {
+                    {"Coste", cm.format(b.path[b.EXH].valor)},
+                    {"Tiempo(ms)", tp.format(b.t[b.EXH] / nano)},
+                    {"Calculadas", b.numcal[b.EXH]}
+                };
+                //mostrar tabla
+                JTable t = new JTable(datos, atributos);
+                JScrollPane sp = new JScrollPane(t);
+                JFrame f = new JFrame();
+                f.add(sp);
+                f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                f.setBounds(700, 200, 1100, 100);
+                f.setTitle("Resultados - " + fileName);
+                f.setVisible(true);
+                //mostrar g
+                Grafo g = new Grafo(b.path[b.EXH]);
+                g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                g.setBounds(200, 350, 800, 400);
+                g.setTitle("Camino");
+                g.setVisible(true);
+                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         } catch (Exception e) {
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             JOptionPane.showMessageDialog(this, "Input no válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        try {
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            //hacer busqueda y crear archivo
-            Busqueda b = new Busqueda(array);
-            b.exhaustiva();
-            Data.guardarBusqueda(b.array.get(b.EXH), "Exhaustiva");
-            //definir formatos de salida
-            DecimalFormat cm = new DecimalFormat("#.00000000");
-            DecimalFormat tp = new DecimalFormat("0.0000");
-            double nano = 1000000.0;
-            //rellenar tabla
-            String[] atributos = {" ",
-                "Exhaustiva"};
-            Object[][] datos = {
-                {"Camino", cm.format(b.path[b.EXH].valor)},
-                {"Tiempo(ms)", tp.format(b.t[b.EXH] / nano)}
-            };
-            //mostrar tabla
-            JTable t = new JTable(datos, atributos);
-            JScrollPane sp = new JScrollPane(t);
-            JFrame f = new JFrame();
-            f.add(sp);
-            f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            f.setBounds(700, 200, 1100, 120);
-            f.setTitle("Resultados - " + fileName);
-            f.setVisible(true);
-            //mostrar g
-            Grafo g = new Grafo(b.path[b.EXH]);
-            g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            g.setBounds(200, 350, 800, 400);
-            g.setTitle("Representación");
-            g.setVisible(true);
-            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "???", "Error", JOptionPane.ERROR_MESSAGE);
-            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
     }//GEN-LAST:event_botonOpcionEActionPerformed
 
@@ -372,7 +385,7 @@ public class Menu extends javax.swing.JFrame {
             //hacer busqueda y crear archivo
             Busqueda b = new Busqueda(array);
             b.bidireccional();
-            Data.guardarBusqueda(b.array.get(b.BI), "Bidireccional");
+            Data.guardarBusqueda(b, b.BI, "Bidireccional");
             //definir formatos de salida
             DecimalFormat cm = new DecimalFormat("#.00000000");
             DecimalFormat tp = new DecimalFormat("0.0000");
@@ -381,8 +394,9 @@ public class Menu extends javax.swing.JFrame {
             String[] atributos = {" ",
                 "Bidireccional"};
             Object[][] datos = {
-                {"Camino", cm.format(b.path[b.BI].valor)},
-                {"Tiempo(ms)", tp.format(b.t[b.BI] / nano)}
+                {"Coste", cm.format(b.path[b.BI].valor)},
+                {"Tiempo(ms)", tp.format(b.t[b.BI] / nano)},
+                {"Calculadas", b.numcal[b.BI]}
             };
             //mostrar tabla
             JTable t = new JTable(datos, atributos);
@@ -390,21 +404,21 @@ public class Menu extends javax.swing.JFrame {
             JFrame f = new JFrame();
             f.add(sp);
             f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            f.setBounds(700, 200, 1100, 120);
+            f.setBounds(700, 200, 1100, 100);
             f.setTitle("Resultados - " + fileName);
             f.setVisible(true);
             //mostrar g
             Grafo g = new Grafo(b.path[b.BI]);
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             g.setBounds(200, 350, 800, 400);
-            g.setTitle("Representación");
+            g.setTitle("Camino");
             g.setVisible(true);
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         } catch (Exception e) {
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             JOptionPane.showMessageDialog(this, "No hay ningún array cargado.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
-}//GEN-LAST:event_botonOpcion4ActionPerformed
+    }//GEN-LAST:event_botonOpcion4ActionPerformed
 
     public static void main(String args[]) {
         Menu m = new Menu();

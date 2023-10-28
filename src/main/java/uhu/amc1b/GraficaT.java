@@ -15,11 +15,11 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class Grafica extends JFrame {
+public class GraficaT extends JFrame {
 
     private final double[][] d;
 
-    public Grafica(double[][] datos, String nombreA, String nombreB) {
+    public GraficaT(double[][] datos, String nombreA, String nombreB) {
         d = datos;
 
         //crear la grafica
