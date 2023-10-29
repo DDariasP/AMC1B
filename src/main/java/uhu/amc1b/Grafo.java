@@ -26,18 +26,19 @@ public class Grafo extends JFrame {
 
     public Grafo(Camino camino) {
         cm = camino;
+
         //crear la grafica
         XYPlot plot = new XYPlot();
 
+        //crear cada parte-i del camino
         for (int i = 0; i < cm.path.length - 1; i++) {
-            //crear dmini
             XYDataset setDisti = createDist(i);
-            //caracteristicas de dmini
+            //caracteristicas de parte-i
             XYItemRenderer rendereri = new XYLineAndShapeRenderer(true, true);
             rendereri.setSeriesShape(0, new Ellipse2D.Double(-3.0, 0.0, 3.0, 3.0));
             rendereri.setSeriesPaint(0, Color.CYAN);
             rendereri.setSeriesStroke(0, new BasicStroke(2.0f));
-            //añadir dmin0 a la grafica
+            //añadir parte-i a la grafica
             plot.setDataset(i, setDisti);
             plot.setRenderer(i, rendereri);
         }
@@ -73,7 +74,7 @@ public class Grafo extends JFrame {
     private XYDataset createNube() {
         XYSeriesCollection dataset = new XYSeriesCollection();
         //ciudades 
-        XYSeries series = new XYSeries("Ciudades");
+        XYSeries series = new XYSeries("");
         for (int i = 0; i < cm.path.length - 1; i++) {
             series.add(cm.path[i].x, cm.path[i].y);
         }
@@ -83,7 +84,7 @@ public class Grafo extends JFrame {
 
     private XYDataset createDist(int n) {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        //distancia minima
+        //parte-i
         XYSeries series = new XYSeries("");
         series.add(cm.path[n].x, cm.path[n].y);
         series.add(cm.path[n + 1].x, cm.path[n + 1].y);

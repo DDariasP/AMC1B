@@ -18,6 +18,7 @@ public class GraficaV extends JFrame {
     public GraficaV(double[][] datos, String nombreA, String nombreB) {
         d = datos;
 
+        //crear el area de trazado
         JFreeChart barChart = ChartFactory.createBarChart(
                 "",
                 "Talla",
@@ -26,39 +27,43 @@ public class GraficaV extends JFrame {
                 PlotOrientation.VERTICAL,
                 true, true, false);
 
+        //crear la grafica
         CategoryPlot plot = barChart.getCategoryPlot();
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
-        renderer.setSeriesPaint(0, Color.CYAN);
-        renderer.setSeriesPaint(1, Color.MAGENTA);
-        renderer.setItemMargin(0.0);
+        renderer.setSeriesPaint(0, Color.CYAN);     //color de f0
+        renderer.setSeriesPaint(1, Color.MAGENTA);  //color de f1
+        renderer.setItemMargin(0.0);    //espacio entre barras
 
+        //crear la ventana 
         ChartPanel chartPanel = new ChartPanel(barChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
         setContentPane(chartPanel);
     }
 
     private CategoryDataset createDataset() {
-        final String t0 = "Unidireccional";
-        final String t1 = "Bidireccional";
-        final String c0 = String.valueOf(d[0][0]);
-        final String c1 = String.valueOf(d[1][0]);
-        final String c2 = String.valueOf(d[2][0]);
-        final String c3 = String.valueOf(d[3][0]);
-        final String c4 = String.valueOf(d[4][0]);
+        //f0 y f1
+        final String f0 = "Unidireccional";
+        final String f1 = "Bidireccional";
+        //tallas
+        final String c0 = String.valueOf((int)(d[0][0]));
+        final String c1 = String.valueOf((int)(d[1][0]));
+        final String c2 = String.valueOf((int)(d[2][0]));
+        final String c3 = String.valueOf((int)(d[3][0]));
+        final String c4 = String.valueOf((int)(d[4][0]));
+        //crear dataset
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        dataset.addValue(d[0][3], t0, c0);
-        dataset.addValue(d[1][3], t0, c1);
-        dataset.addValue(d[2][3], t0, c2);
-        dataset.addValue(d[3][3], t0, c3);
-        dataset.addValue(d[4][3], t0, c4);
-
-        dataset.addValue(d[0][4], t1, c0);
-        dataset.addValue(d[1][4], t1, c1);
-        dataset.addValue(d[2][4], t1, c2);
-        dataset.addValue(d[3][4], t1, c3);
-        dataset.addValue(d[4][4], t1, c4);
-
+        //f0
+        dataset.addValue(d[0][3], f0, c0);
+        dataset.addValue(d[1][3], f0, c1);
+        dataset.addValue(d[2][3], f0, c2);
+        dataset.addValue(d[3][3], f0, c3);
+        dataset.addValue(d[4][3], f0, c4);
+        //f1
+        dataset.addValue(d[0][4], f1, c0);
+        dataset.addValue(d[1][4], f1, c1);
+        dataset.addValue(d[2][4], f1, c2);
+        dataset.addValue(d[3][4], f1, c3);
+        dataset.addValue(d[4][4], f1, c4);
+        //dataset creado
         return dataset;
     }
 

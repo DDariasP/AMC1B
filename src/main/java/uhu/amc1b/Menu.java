@@ -214,10 +214,10 @@ public class Menu extends javax.swing.JFrame {
             JFrame f = new JFrame();
             f.add(sp);
             f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            f.setBounds(700, 200, 1100, 100);
+            f.setBounds(700, 200, 400, 100);
             f.setTitle("Resultados - " + fileName);
             f.setVisible(true);
-            //mostrar g
+            //mostrar grafo
             Grafo g = new Grafo(b.path[b.UNI]);
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             g.setBounds(200, 350, 800, 400);
@@ -229,6 +229,47 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay ningún array cargado.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botonOpcion3ActionPerformed
+
+    private void botonOpcion4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOpcion4ActionPerformed
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            //hacer busqueda y crear archivo
+            Busqueda b = new Busqueda(array);
+            b.bidireccional();
+            Data.guardarBusqueda(b, b.BI, "Bidireccional");
+            //definir formatos de salida
+            DecimalFormat cm = new DecimalFormat("#.00000000");
+            DecimalFormat tp = new DecimalFormat("0.0000");
+            double nano = 1000000.0;
+            //rellenar tabla
+            String[] atributos = {" ",
+                "Bidireccional"};
+            Object[][] datos = {
+                {"Coste", cm.format(b.path[b.BI].valor)},
+                {"Tiempo(ms)", tp.format(b.t[b.BI] / nano)},
+                {"Calculadas", b.numcal[b.BI]}
+            };
+            //mostrar tabla
+            JTable t = new JTable(datos, atributos);
+            JScrollPane sp = new JScrollPane(t);
+            JFrame f = new JFrame();
+            f.add(sp);
+            f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            f.setBounds(700, 200, 400, 100);
+            f.setTitle("Resultados - " + fileName);
+            f.setVisible(true);
+            //mostrar grafo
+            Grafo g = new Grafo(b.path[b.BI]);
+            g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            g.setBounds(200, 350, 800, 400);
+            g.setTitle("Camino");
+            g.setVisible(true);
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        } catch (Exception e) {
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            JOptionPane.showMessageDialog(this, "No hay ningún array cargado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_botonOpcion4ActionPerformed
 
     private void botonOpcion5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOpcion5ActionPerformed
         try {
@@ -266,6 +307,7 @@ public class Menu extends javax.swing.JFrame {
                 for (int j = 0; j < N; j++) {
                     tablaT[i][0] = tablaT[i][0] + b[i][j].t[0];
                     tablaT[i][1] = tablaT[i][1] + b[i][j].t[1];
+                    //contar victorias
                     if (b[i][j].path[0].valor < b[i][j].path[1].valor) {
                         tablaV[i][0]++;
                     } else {
@@ -306,13 +348,13 @@ public class Menu extends javax.swing.JFrame {
             f.setBounds(700, 200, 800, 150);
             f.setTitle("Resultados");
             f.setVisible(true);
-            //mostrar g
+            //mostrar tiempo
             GraficaT g = new GraficaT(valores, "Unidireccional", "Bidireccional");
             g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             g.setBounds(200, 350, 800, 400);
             g.setTitle("Tiempo");
             g.setVisible(true);
-            //mostrar h
+            //mostrar victorias
             GraficaV h = new GraficaV(valores, "Unidireccional", "Bidireccional");
             h.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             h.setBounds(1000, 350, 600, 400);
@@ -362,10 +404,10 @@ public class Menu extends javax.swing.JFrame {
                 JFrame f = new JFrame();
                 f.add(sp);
                 f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                f.setBounds(700, 200, 1100, 100);
+                f.setBounds(700, 200, 400, 100);
                 f.setTitle("Resultados - " + fileName);
                 f.setVisible(true);
-                //mostrar g
+                //mostrar grafo
                 Grafo g = new Grafo(b.path[b.EXH]);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
@@ -378,47 +420,6 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Input no válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botonOpcionEActionPerformed
-
-    private void botonOpcion4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOpcion4ActionPerformed
-        try {
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            //hacer busqueda y crear archivo
-            Busqueda b = new Busqueda(array);
-            b.bidireccional();
-            Data.guardarBusqueda(b, b.BI, "Bidireccional");
-            //definir formatos de salida
-            DecimalFormat cm = new DecimalFormat("#.00000000");
-            DecimalFormat tp = new DecimalFormat("0.0000");
-            double nano = 1000000.0;
-            //rellenar tabla
-            String[] atributos = {" ",
-                "Bidireccional"};
-            Object[][] datos = {
-                {"Coste", cm.format(b.path[b.BI].valor)},
-                {"Tiempo(ms)", tp.format(b.t[b.BI] / nano)},
-                {"Calculadas", b.numcal[b.BI]}
-            };
-            //mostrar tabla
-            JTable t = new JTable(datos, atributos);
-            JScrollPane sp = new JScrollPane(t);
-            JFrame f = new JFrame();
-            f.add(sp);
-            f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            f.setBounds(700, 200, 1100, 100);
-            f.setTitle("Resultados - " + fileName);
-            f.setVisible(true);
-            //mostrar g
-            Grafo g = new Grafo(b.path[b.BI]);
-            g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            g.setBounds(200, 350, 800, 400);
-            g.setTitle("Camino");
-            g.setVisible(true);
-            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        } catch (Exception e) {
-            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            JOptionPane.showMessageDialog(this, "No hay ningún array cargado.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_botonOpcion4ActionPerformed
 
     public static void main(String args[]) {
         Menu m = new Menu();

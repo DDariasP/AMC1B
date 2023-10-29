@@ -25,25 +25,25 @@ public class GraficaT extends JFrame {
         //crear la grafica
         XYPlot plot = new XYPlot();
 
-        //crear dmin0
+        //crear f0
         XYDataset setDist0 = createDist(1, nombreA);
-        //caracteristicas de dmin0
+        //caracteristicas de f0
         XYItemRenderer renderer0 = new XYLineAndShapeRenderer(true, true);
         renderer0.setSeriesShape(0, new Rectangle2D.Double(-3.0, 0.0, 6.0, 6.0));
         renderer0.setSeriesPaint(0, Color.CYAN);
         renderer0.setSeriesStroke(0, new BasicStroke(2.0f));
-        //añadir dmin0 a la grafica
+        //añadir f0 a la grafica
         plot.setDataset(0, setDist0);
         plot.setRenderer(0, renderer0);
 
-        //crear dmin1
+        //crear f1
         XYDataset setDist1 = createDist(2, nombreB);
-        //caracteristicas de dmin1
+        //caracteristicas de f1
         XYItemRenderer renderer1 = new XYLineAndShapeRenderer(true, true);
         renderer1.setSeriesShape(0, new Rectangle2D.Double(-3.0, 0.0, 6.0, 6.0));
         renderer1.setSeriesPaint(0, Color.MAGENTA);
         renderer1.setSeriesStroke(0, new BasicStroke(2.0f));
-        //añadir dmin1 a la grafica
+        //añadir f1 a la grafica
         plot.setDataset(1, setDist1);
         plot.setRenderer(1, renderer1);
 
@@ -66,10 +66,10 @@ public class GraficaT extends JFrame {
 
     private XYDataset createDist(int tipo, String nombre) {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        //distancia minima
+        //talla - tiempo
         XYSeries series = new XYSeries(nombre);
         for (int i = 0; i < 5; i++) {
-            series.add(d[i][0], d[i][tipo]);
+            series.add((int)(d[i][0]), d[i][tipo]);
         }
         dataset.addSeries(series);
         return dataset;

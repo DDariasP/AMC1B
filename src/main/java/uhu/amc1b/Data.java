@@ -95,7 +95,7 @@ public class Data {
 
     public static void guardarBusqueda(Busqueda b, int n, String tipo) {
         try {
-            //crear el nuevo .tsp
+            //crear el nuevo .tour
             int m = b.array.get(0).length;
             String outputName = tipo + m + ".tour";
             File output = new File(outputName);
@@ -103,7 +103,7 @@ public class Data {
                 output.delete();
             }
             output.createNewFile();
-            //rellenar el nuevo .tsp
+            //rellenar el nuevo .tour
             FileWriter writer = new FileWriter(outputName);
             writer.write("NAME: " + outputName + "\n");
             writer.write("TYPE: TOUR\n");
@@ -111,13 +111,15 @@ public class Data {
             DecimalFormat numberFormat = new DecimalFormat("#.00000000");
             writer.write("SOLUTION: " + numberFormat.format(b.path[n].valor) + "\n");
             writer.write("TOUR_SECTION\n");
+            //camino
             String path = "";
             Punto[] p = b.path[n].path;
             for (int i = 0; i < p.length - 1; i++) {
                 path = path + p[i].id + ",";
             }
-            path = path + p[p.length - 1].id;
-            writer.write(path + "\n");
+            path = path + p[p.length - 1].id; 
+            writer.write(path + "\n");  
+            //distancia - p1,p2
             for (int i = 0; i < p.length - 1; i++) {
                 path = numberFormat.format(Punto.distancia(p[i], p[i + 1]));
                 path = path + " - " + p[i].id + "," + p[i + 1].id;
